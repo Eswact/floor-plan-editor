@@ -1,6 +1,6 @@
 import { migrateFloors } from './floor-service.js';
 
-export function exportToFile(floors, filename = 'restaurant-layout.json') {
+export function exportToFile(floors, filename = 'floors-layout.json') {
   const blob = new Blob([JSON.stringify(floors, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');

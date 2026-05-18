@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Floor Plan Editor</title>
+  <link rel="stylesheet" href="src/shared/global.css" />
+  <style>
+    .landing-body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .landing-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+    }
+
+    .landing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+      max-width: 780px;
+    }
+
+    .landing-card {
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 36px 32px;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    }
+
+    .landing-card:hover {
+      border-color: var(--primary-color);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .landing-card-icon {
+      font-size: 36px;
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    .landing-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--dark-color);
+      margin-bottom: 10px;
+    }
+
+    .landing-card-desc {
+      font-size: 14px;
+      color: #6c757d;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .landing-card-action {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 10px 20px;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      align-self: flex-start;
+    }
+
+    .landing-card:hover .landing-card-action {
+      opacity: 0.9;
+    }
+
+    .landing-footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+      color: #adb5bd;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .landing-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    @media (max-width: 560px) {
+      .landing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="landing-body">
+
+  <div class="header">
+    <h1>Floor Plan Editor</h1>
+  </div>
+
+  <main class="landing-main">
+    <div class="landing-grid">
+
+      <a class="landing-card" href="src/modules/create-floor-plan/index.html">
+        <div class="landing-card-icon">&#9998;</div>
+        <div class="landing-card-title">Editor</div>
+        <p class="landing-card-desc">
+          Create and manage multi-floor restaurant layouts. Add tables, doors, stairs and WC objects via drag-and-drop, then export as JSON.
+        </p>
+        <span class="landing-card-action">Open Editor &rarr;</span>
+      </a>
+
+      <a class="landing-card" href="src/modules/show-floor-plan/index.html">
+        <div class="landing-card-icon">&#128065;</div>
+        <div class="landing-card-title">Viewer</div>
+        <p class="landing-card-desc">
+          Load a JSON layout and view the floor plan with live table state colors — available, occupied and reserved.
+        </p>
+        <span class="landing-card-action">Open Viewer &rarr;</span>
+      </a>
+
+    </div>
+  </main>
+
+  <footer class="landing-footer">
+    Created by <a href="https://github.com/eswact" target="_blank" rel="noopener noreferrer">Eswact</a>
+  </footer>
+
+</body>
+</html>

@@ -278,7 +278,7 @@ function _handleObjectDelete(objId) {
 }
 
 function _handleExport() {
-  StorageService.exportToFile(floors, 'restaurant-layout.json');
+  StorageService.exportToFile(floors, 'floors-layout.json');
 }
 
 function _handleImport(e) {
