@@ -7,7 +7,7 @@ export function createTableElement(table, options = {}) {
   el.className = 'table-element';
   if (table.shape === TableShape.ROUND) el.classList.add('round');
   if (options.isSelected) el.classList.add('selected');
-  if (table.state) el.classList.add(table.state);
+  if (table.state && !options.ignoreState) el.classList.add(table.state);
 
   el.style.left = `${table.x}px`;
   el.style.top = `${table.y}px`;
@@ -86,6 +86,7 @@ export function renderFloor(canvas, floor, options = {}) {
   floor.tables.forEach(table => {
     const el = createTableElement(table, {
       isSelected: options.selectedTableId === table.id,
+      ignoreState: options.ignoreState,
       onDelete: options.onTableDelete,
       onRotate: options.onTableRotate,
       onClick: options.onTableClick,

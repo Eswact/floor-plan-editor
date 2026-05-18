@@ -307,6 +307,7 @@ function _handleClearFloor() {
 function _render() {
   FloorRenderer.renderFloor(els.canvas, _currentFloor(), {
     selectedTableId,
+    ignoreState: true,
     onTableClick: _handleTableClick,
     onTableDelete: _handleTableDelete,
     onTableRotate: _handleTableRotate,

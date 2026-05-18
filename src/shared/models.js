@@ -1,4 +1,4 @@
-import { GridConfig } from './constants.js';
+import { GridConfig, TableState } from './constants.js';
 import { generateGUID } from './utils.js';
 
 export function createFloor(name) {
@@ -15,6 +15,7 @@ export function createTable(params) {
   return {
     id: generateGUID(),
     tableNo: params.tableNo,
+    state: TableState.AVAILABLE,
     shape: params.shape,
     capacity: params.capacity,
     gridX: params.gridX,
