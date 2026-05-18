@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Table Viewer</title>
+  <link rel="stylesheet" href="../../shared/global.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="main-container">
+    <div class="header">
+      <h1>Restaurant Table Viewer</h1>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Floor:</label>
+        <select id="floorSelect">
+          <option value="">Please load a JSON file</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <button id="loadJsonBtn" class="success">Load JSON</button>
+        <input type="file" id="fileInput" accept=".json">
+      </div>
+    </div>
+
+    <div class="workspace">
+      <div class="canvas-wrapper">
+        <div class="canvas-container">
+          <div class="canvas" id="canvas"></div>
+        </div>
+
+        <div class="mobile-table-list" id="mobileTableList">
+          <h3>Tables</h3>
+          <div id="mobileTableContainer">
+            <div class="empty-state">
+              <p>No JSON loaded yet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value" id="totalFloors">0</div>
+        <div class="stat-label">Total Floors</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="totalTables">0</div>
+        <div class="stat-label">Total Tables</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="currentFloorTables">0</div>
+        <div class="stat-label">Tables on This Floor</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Floor Creator</title>
+    <link rel="stylesheet" href="../../shared/global.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="main-container">
+        <div class="header">
+            <h1>Restaurant Table Layout Editor</h1>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Floor:</label>
+                <select id="floorSelect"></select>
+                <button id="addFloorBtn">+ Add Floor</button>
+                <button id="removeFloorBtn" class="danger">- Remove Floor</button>
+            </div>
+            <div class="control-group">
+                <label>Floor Name:</label>
+                <input type="text" id="floorNameInput" placeholder="Change floor name">
+                <button id="renameFloorBtn">Rename</button>
+            </div>
+            <div class="control-group doorAndStairControls">
+                <button id="addDoorBtn">Add Door</button>
+                <button id="addStairModalBtn">Add Stairs</button>
+                <button id="addWcModalBtn">Add WC</button>
+                <button id="addObjectModalBtn">Add Object</button>
+            </div>
+        </div>
+
+        <div class="workspace">
+            <div class="sidebar">
+                <div class="table-templates-section">
+                    <h3>Table Templates</h3>
+                    <div class="table-templates">
+                        <div class="template-table square" draggable="true"
+                            data-shape="square"
+                            data-size="4"
+                            data-grid-width="1"
+                            data-grid-height="1">
+                            <div>Square</div>
+                            <div class="template-label">4 People</div>
+                        </div>
+                        <div class="template-table round" draggable="true"
+                            data-shape="round"
+                            data-size="4"
+                            data-grid-width="1"
+                            data-grid-height="1">
+                            <div>Round</div>
+                            <div class="template-label">4 People</div>
+                        </div>
+                        <div class="template-table rectangle" draggable="true"
+                            data-shape="rectangle"
+                            data-size="6"
+                            data-grid-width="2"
+                            data-grid-height="1">
+                            <div>Rectangle</div>
+                            <div class="template-label">6 People</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="multi-table-control-section">
+                    <h3>Add Multiple Tables</h3>
+                    <div class="multi-table-controls">
+                        <select id="multiTableShapeSelect">
+                            <option value="square" data-size="4" data-grid-width="1" data-grid-height="1">Square</option>
+                            <option value="round" data-size="4" data-grid-width="1" data-grid-height="1">Round</option>
+                            <option value="rectangle" data-size="6" data-grid-width="2" data-grid-height="1">Rectangle</option>
+                        </select>
+                        <input type="number" id="multiTableCountInput" min="1" max="60" value="1" />
+                        <button id="addMultiTablesBtn" class="success">Add Tables</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="canvas-wrapper">
+                <div class="canvas-container">
+                    <div class="canvas" id="canvas"></div>
+                </div>
+
+                <div class="mobile-table-list" id="mobileTableList">
+                    <h3 style="margin-bottom: 15px; color: var(--dark-color);">Tables</h3>
+                    <div id="mobileTableContainer"></div>
+                    <button id="addTableMobileBtn" class="success" style="width: 100%; margin-top: 15px;">
+                        + Add Table
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="export-section">
+            <div class="export-buttons">
+                <button id="exportJsonBtn" class="success">Download JSON</button>
+                <button id="importJsonBtn">Load JSON</button>
+                <input type="file" id="fileInput" accept=".json" style="display:none">
+                <button id="clearFloorBtn" class="danger">Clear Floor</button>
+            </div>
+            <div class="json-output" id="jsonOutput">JSON output will appear here...</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="totalFloors">0</div>
+                    <div class="stat-label">Total Floors</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="totalTables">0</div>
+                    <div class="stat-label">Total Tables</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="currentFloorTables">0</div>
+                    <div class="stat-label">Tables on This Floor</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modals" id="propertiesModal">
+        <div class="modal-context">
+            <div class="modal-header">
+                <h3>Table Properties</h3>
+                <button class="modal-close" id="closeModalBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="property-group">
+                    <label>Table No:</label>
+                    <input type="text" id="tableNumberInput" placeholder="e.g. A1, F1, Table-1" maxlength="7">
+                </div>
+                <div class="property-group">
+                    <label>Capacity:</label>
+                    <input type="number" id="tableCapacityInput" min="1" max="20">
+                </div>
+                <div class="property-group">
+                    <button id="applyPropertiesBtn" class="success" style="width: 100%;">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modals" id="addTableModal">
+        <div class="modal-context">
+            <div class="modal-header">
+                <h3>Add Table</h3>
+                <button class="modal-close" id="closeAddTableModalBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="color: #6c757d; margin-bottom: 12px; font-size: 14px;">
+                    Enter the number of tables to add
+                </p>
+                <div class="table-count-select">
+                    <input type="number" id="autoTableCountInput" min="1" max="60" value="1" style="width: 100%; margin-bottom: 20px;"/>
+                </div>
+
+                <p style="color: #6c757d; margin-bottom: 12px; font-size: 14px;">
+                    Select the table type to add
+                </p>
+
+                <div class="table-type-grid">
+                    <button class="table-type-btn" data-shape="square" data-size="4" data-grid-width="1" data-grid-height="1">
+                        <div class="table-type-icon square">
+                            <span>1</span>
+                        </div>
+                        <div class="table-type-info">
+                            <strong>Square Table</strong>
+                            <span>4-seater</span>
+                        </div>
+                    </button>
+
+                    <button class="table-type-btn" data-shape="round" data-size="4" data-grid-width="1" data-grid-height="1">
+                        <div class="table-type-icon round">
+                            <span>2</span>
+                        </div>
+                        <div class="table-type-info">
+                            <strong>Round Table</strong>
+                            <span>4-seater</span>
+                        </div>
+                    </button>
+
+                    <button class="table-type-btn" data-shape="rectangle" data-size="6" data-grid-width="2" data-grid-height="1">
+                        <div class="table-type-icon rectangle">
+                            <span>3</span>
+                        </div>
+                        <div class="table-type-info">
+                            <strong>Rectangle Table</strong>
+                            <span>6-seater</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modals" id="addStairModal">
+        <div class="modal-context">
+            <div class="modal-header">
+                <h3>Add Stairs</h3>
+                <button class="modal-close" id="closeStairModalBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="property-group">
+                    <label>Width (Grid):</label>
+                    <input type="number" id="stairWidthInput" min="1" max="10" value="2" />
+                </div>
+                <div class="property-group">
+                    <label>Height (Grid):</label>
+                    <input type="number" id="stairHeightInput" min="1" max="6" value="2" />
+                </div>
+                <div class="property-group">
+                    <button id="addStairBtn" class="success" style="width: 100%;">Add Stairs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modals" id="addWcModal">
+        <div class="modal-context">
+            <div class="modal-header">
+                <h3>Add WC</h3>
+                <button class="modal-close" id="closeWcModalBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="property-group">
+                    <label>Width (Grid):</label>
+                    <input type="number" id="wcWidthInput" min="1" max="10" value="2" />
+                </div>
+                <div class="property-group">
+                    <label>Height (Grid):</label>
+                    <input type="number" id="wcHeightInput" min="1" max="6" value="2" />
+                </div>
+                <div class="property-group">
+                    <button id="addWcBtn" class="success" style="width: 100%;">Add WC</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modals" id="addCustomObjectModal">
+        <div class="modal-context">
+            <div class="modal-header">
+                <h3>Add Custom Object</h3>
+                <button class="modal-close" id="closeCustomObjectModalBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="property-group">
+                    <label>Object Name:</label>
+                    <input type="text" id="customObjectNameInput" />
+                </div>
+                <div class="property-group">
+                    <label>Width (Grid):</label>
+                    <input type="number" id="customObjectWidthInput" min="1" max="10" value="2" />
+                </div>
+                <div class="property-group">
+                    <label>Height (Grid):</label>
+                    <input type="number" id="customObjectHeightInput" min="1" max="6" value="2" />
+                </div>
+                <div class="property-group">
+                    <button id="addCustomObjectBtn" class="success" style="width: 100%;">Add Custom Object</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
